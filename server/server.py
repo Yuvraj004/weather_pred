@@ -36,15 +36,11 @@ def predict_disease():
     data = request.get_json()
     
     print(data)
-    age = float(data['age'])
-    sex = int(data['sex'])
-    chest_pain_type = int(data['chestpaintype'])
-    resting_bp = int(data['restingbp'])
-    cholesterol = int(data['cholesterol'])
-    blood_sugar = int(data['bloodsugar'])
-    max_heart_rate = int(data['max_heart_rate'])
+    landavgTemp = float(data['landavgTemp'])
+    landmaxTemp = int(data['landmaxTemp'])
+    landminTemp = int(data['landminTemp'])
 
-    chance = util.predict_disease(sex,age,chest_pain_type,resting_bp,cholesterol,blood_sugar,max_heart_rate)
+    chance = util.predict_weather(landavgTemp,landmaxTemp,landminTemp)
     print(chance," ",type(chance))
 
     if isinstance(chance, np.ndarray):
@@ -53,7 +49,7 @@ def predict_disease():
         chance = chance.item()
 
     response = jsonify({
-        'disease_chances': chance
+        'weather_chances': chance
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
 
