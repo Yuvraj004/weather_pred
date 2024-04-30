@@ -1,7 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
-
+import React, {useState } from 'react';
 function App() {
+  const  [landavgtemp,setLandAvgTemp] = useState(0);
+  const  [landmaxtemp,setLandMaxTemp] = useState(0);
+  const  [landmintemp,setLandMinTemp] = useState(0);
+
+  function CallBackend(e) {
+    e.preventDefault();
+    fetch('http://localhost:5000/predict_weather')
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+  }
   return (
     <div className="App main-bg">
       <nav className="navbar bg-body-tertiary">
@@ -22,15 +33,15 @@ function App() {
           <div class="container-content">
               <form class="margin-t">
                   <div class="form-group">
-                      <input type="text" class="form-control" placeholder="LandAvgTemperature" required=""/>
+                      <input type="text" class="form-control" placeholder="LandAvgTemperature" required="" value={landavgtemp} onChange={(e)=>e.target.value}/>
                   </div>
                   <div class="form-group">
-                      <input type="text" class="form-control" placeholder="LandMaxTemperature" required=""/>
+                      <input type="text" class="form-control" placeholder="LandMaxTemperature" required="" value={landmaxtemp} onChange={(e)=>e.target.value}/>
                   </div>
                   <div class="form-group">
-                      <input type="text" class="form-control" placeholder="LandMinTemperature" required=""/>
+                      <input type="text" class="form-control" placeholder="LandMinTemperature" required="" value={landmintemp} onChange={(e)=>e.target.value}/>
                   </div>
-                  <button type="submit" class="form-button button-l margin-b">Predict</button>
+                  <button type="submit" class="form-button button-l margin-b" onSubmit={(e) => {CallBackend(e)}}>Predict</button>
   
                   <a class="text-darkyellow" href="/"><small>Forgot your password?</small></a>
                   <p class="text-whitesmoke text-center"><small>Do not have an account?</small></p>
